@@ -12,10 +12,12 @@ class Carrito:
 
     def agregar(self, producto, cantidad):
         self._validar_rango(cantidad)
-        self._validar_stock(producto, cantidad)
         item = self._buscar_item(producto)
+        acumulada = cantidad + (item.cantidad if item else 0)
+        self._validar_rango(acumulada)
+        self._validar_stock(producto, cantidad)
         if item:
-            item.cantidad += cantidad
+            item.cantidad = acumulada
         else:
             self.items.append(ItemCarrito(producto, cantidad))
 
