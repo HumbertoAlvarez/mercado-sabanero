@@ -14,3 +14,4 @@ def test_redondeo_al_peso_mas_cercano(numerador, denominador, esperado):
     resultado = redondear_division(numerador, denominador)
     # Assert
     assert resultado == esperado
+
