@@ -3,7 +3,7 @@ from datetime import date
 
 import pytest
 
-from mercado.cupones import CatalogoCupones, Cupon
+from mercado.cupones import CatalogoCupones, Cupon, aplicar_envio
 from mercado.errores import CuponInvalidoError
 
 
@@ -68,3 +68,21 @@ def test_sabanero10_con_subtotal_de_50000_es_valido():
     cupon = catalogo.obtener("SABANERO10", subtotal=50_000)
     # Assert
     assert cupon.porcentaje == 10
+
+def test_cupon_enviogratis_deja_el_envio_en_cero():
+    # Arrange
+    catalogo = CatalogoCupones([Cupon("ENVIOGRATIS", envio_gratis=True)])
+    cupon = catalogo.obtener("ENVIOGRATIS")
+    # Act
+    envio = aplicar_envio(cupon, 15_000)
+    # Assert
+    assert envio == 0
+
+
+def test_cupon_sin_enviogratis_conserva_el_envio():
+    # Arrange
+    cupon = CatalogoCupones().obtener("SABANERO10")
+    # Act
+    envio = aplicar_envio(cupon, 15_000)
+    # Assert
+    assert envio == 15_000
