@@ -28,6 +28,7 @@ class Carrito:
             raise StockInsuficienteError(
                 f"Stock insuficiente: se pidieron {cantidad} y hay {stock}."
             )
+        
     def agregar(self, producto, cantidad):
         self._validar_rango(cantidad)
         self._validar_stock(producto, cantidad)
@@ -36,4 +37,18 @@ class Carrito:
                 item.cantidad += cantidad
                 return
         self.items.append(ItemCarrito(producto, cantidad))
-       
+        
+    def agregar(self, producto, cantidad):
+        self._validar_rango(cantidad)
+        self._validar_stock(producto, cantidad)
+        item = self._buscar_item(producto)
+        if item:
+            item.cantidad += cantidad
+        else:
+            self.items.append(ItemCarrito(producto, cantidad))
+
+    def _buscar_item(self, producto):
+        for item in self.items:
+            if item.producto == producto:
+                return item
+        return None
