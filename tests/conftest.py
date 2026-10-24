@@ -24,3 +24,10 @@ def carrito(inventario):
 @pytest.fixture
 def arroz():
     return Producto("P3", "Arroz", 4_500, 0)
+
+
+
+
+@pytest.fixture
+def cafe():
+    return Producto("P2", "Café", 15_000, 5)
