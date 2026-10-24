@@ -27,6 +27,7 @@ def test_agregar_con_stock_menor_a_lo_pedido_lanza_stock_insuficiente(carrito, i
     with pytest.raises(StockInsuficienteError):
         carrito.agregar(arroz, 4)
 
+
 def test_agregar_el_mismo_producto_dos_veces_suma_las_cantidades(carrito, arroz):
     # Arrange
     carrito.agregar(arroz, 3)
@@ -36,6 +37,7 @@ def test_agregar_el_mismo_producto_dos_veces_suma_las_cantidades(carrito, arroz)
     assert len(carrito.items) == 1
     assert carrito.items[0].cantidad == 5
 
+
 def test_agregar_de_nuevo_que_supera_50_acumuladas_lanza_error(carrito, arroz):
     # Arrange
     carrito.agregar(arroz, 30)
@@ -43,10 +45,28 @@ def test_agregar_de_nuevo_que_supera_50_acumuladas_lanza_error(carrito, arroz):
     with pytest.raises(CantidadInvalidaError):
         carrito.agregar(arroz, 21) 
 
+
 def test_agregar_de_nuevo_valida_el_stock_sobre_la_cantidad_acumulada(carrito, inventario, arroz):
     # Arrange: el inventario (mock) dice que hay 4 unidades y ya hay 3 en el carrito
     inventario.stock_disponible.return_value = 4
     carrito.agregar(arroz, 3)
     # Act + Assert
     with pytest.raises(StockInsuficienteError):
-        carrito.agregar(arroz, 2)           
+        carrito.agregar(arroz, 2)     
+
+
+def test_agregar_consulta_al_inventario_el_stock_del_producto(carrito, inventario, arroz):
+    # Arrange: inventario es un doble de prueba
+    # Act
+    carrito.agregar(arroz, 2)
+    # Assert
+    inventario.stock_disponible.assert_called_once_with(arroz.id)
+
+
+def test_cantidad_invalida_no_consulta_al_inventario(carrito, inventario, arroz):
+    # Arrange: inventario es un doble de prueba
+    # Act
+    with pytest.raises(CantidadInvalidaError):
+        carrito.agregar(arroz, 0)
+    # Assert
+    inventario.stock_disponible.assert_not_called()
