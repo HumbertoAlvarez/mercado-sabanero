@@ -1,31 +1,20 @@
+import pytest
+
 from mercado.puntos import calcular_puntos
 
 
-def test_999_pesos_no_dan_puntos():
+@pytest.mark.parametrize("total, esperado", [
+    (999, 0),
+    (1_000, 1),
+    (1_999, 1),
+])
+def test_puntos_sin_categoria_en_los_limites(total, esperado):
     # Arrange
-    total = 999
+    # (total y esperado llegan por parametro)
     # Act
     puntos = calcular_puntos(total)
     # Assert
-    assert puntos == 0
-
-
-def test_1000_pesos_dan_1_punto():
-    # Arrange
-    total = 1_000
-    # Act
-    puntos = calcular_puntos(total)
-    # Assert
-    assert puntos == 1
-
-
-def test_1999_pesos_dan_1_punto():
-    # Arrange
-    total = 1_999
-    # Act
-    puntos = calcular_puntos(total)
-    # Assert
-    assert puntos == 1
+    assert puntos == esperado
 
 
 def test_cliente_oro_recibe_el_doble_con_1000_pesos():
