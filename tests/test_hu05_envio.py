@@ -26,3 +26,21 @@ def test_el_municipio_no_distingue_mayusculas_ni_espacios():
     envio = calcular_envio(municipio, 0)
     # Assert
     assert envio == 8_000
+
+
+def test_envio_gratis_desde_150000():
+    # Arrange
+    municipio = "Sincelejo"
+    # Act
+    envio = calcular_envio(municipio, 150_000)
+    # Assert
+    assert envio == 0
+
+
+def test_envio_se_cobra_con_149999():
+    # Arrange
+    municipio = "Sincelejo"
+    # Act
+    envio = calcular_envio(municipio, 149_999)
+    # Assert
+    assert envio == 8_000
