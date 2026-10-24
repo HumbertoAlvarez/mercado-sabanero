@@ -27,5 +27,12 @@ def test_agregar_con_stock_menor_a_lo_pedido_lanza_stock_insuficiente(carrito, i
     with pytest.raises(StockInsuficienteError):
         carrito.agregar(arroz, 4)
 
-
+def test_agregar_el_mismo_producto_dos_veces_suma_las_cantidades(carrito, arroz):
+    # Arrange
+    carrito.agregar(arroz, 3)
+    # Act
+    carrito.agregar(arroz, 2)
+    # Assert
+    assert len(carrito.items) == 1
+    assert carrito.items[0].cantidad == 5
  
