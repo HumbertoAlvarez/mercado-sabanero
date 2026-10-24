@@ -50,3 +50,21 @@ def test_cupon_vigente_el_ultimo_dia_todavia_es_valido():
     assert cupon.porcentaje == 5
 
 
+
+
+@pytest.mark.parametrize("subtotal", [1, 49_999])
+def test_sabanero10_con_subtotal_menor_a_50000_lanza_error(subtotal):
+    # Arrange
+    catalogo = CatalogoCupones()
+    # Act + Assert
+    with pytest.raises(CuponInvalidoError):
+        catalogo.obtener("SABANERO10", subtotal=subtotal)
+
+
+def test_sabanero10_con_subtotal_de_50000_es_valido():
+    # Arrange
+    catalogo = CatalogoCupones()
+    # Act
+    cupon = catalogo.obtener("SABANERO10", subtotal=50_000)
+    # Assert
+    assert cupon.porcentaje == 10
