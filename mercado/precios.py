@@ -6,7 +6,8 @@ TARIFAS_IVA = (0, 5, 19)
 def calcular_iva(valor, tarifa, descuento_porcentaje=0):
     if tarifa not in TARIFAS_IVA:
         raise TarifaIvaInvalidaError(f"Tarifa de IVA no permitida: {tarifa}.")
-    return redondear_division(valor * (100 - descuento_porcentaje) * tarifa, 100 * 100)
+    porcentaje_a_pagar = 100 - descuento_porcentaje
+    return redondear_division(valor * porcentaje_a_pagar * tarifa, 100 * 100)
 
 
 def redondear_division(numerador, denominador):

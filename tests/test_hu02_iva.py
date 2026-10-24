@@ -31,6 +31,7 @@ def test_iva_se_calcula_sobre_el_valor_con_descuento_aplicado():
     # Assert
     assert iva == 45_125       
 
+
     @pytest.mark.parametrize("valor, esperado", [(1_005, 50), (1_010, 51)])
     def test_iva_con_fraccion_de_peso_se_redondea_al_peso_mas_cercano(valor, esperado):
     # Arrange: IVA de 5 % da 50,25 y 50,5 pesos
