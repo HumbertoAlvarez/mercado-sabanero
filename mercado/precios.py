@@ -2,6 +2,11 @@ from mercado.errores import TarifaIvaInvalidaError
 
 TARIFAS_IVA = (0, 5, 19)
 
+TRAMOS_DESCUENTO_VOLUMEN = (
+    (500_000, 10),
+    (200_000, 5),
+)
+
 
 def calcular_iva(valor, tarifa, descuento_porcentaje=0):
     if tarifa not in TARIFAS_IVA:
@@ -16,8 +21,7 @@ def redondear_division(numerador, denominador):
 
 
 def descuento_volumen_pct(subtotal):
-    if subtotal >= 500_000:
-        return 10
-    if subtotal >= 200_000:
-        return 5
+    for minimo, porcentaje in TRAMOS_DESCUENTO_VOLUMEN:
+        if subtotal >= minimo:
+            return porcentaje
     return 0
