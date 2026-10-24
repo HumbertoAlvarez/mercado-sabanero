@@ -26,3 +26,21 @@ def test_1999_pesos_dan_1_punto():
     puntos = calcular_puntos(total)
     # Assert
     assert puntos == 1
+
+
+def test_cliente_oro_recibe_el_doble_con_1000_pesos():
+    # Arrange
+    total = 1_000
+    # Act
+    puntos = calcular_puntos(total, categoria="ORO")
+    # Assert
+    assert puntos == 2
+
+
+def test_cliente_oro_recibe_500_puntos_con_el_ejemplo_oficial():
+    # Arrange
+    total = 250_515
+    # Act
+    puntos = calcular_puntos(total, categoria="ORO")
+    # Assert
+    assert puntos == 500
