@@ -9,3 +9,11 @@ def test_envio_a_sincelejo_cuesta_8000():
     envio = calcular_envio(municipio, 0)
     # Assert
     assert envio == 8_000
+
+def test_envio_a_otro_municipio_cuesta_15000():
+    # Arrange
+    municipio = "Corozal"
+    # Act
+    envio = calcular_envio(municipio, 0)
+    # Assert
+    assert envio == 15_000
