@@ -70,3 +70,13 @@ def test_cantidad_invalida_no_consulta_al_inventario(carrito, inventario, arroz)
         carrito.agregar(arroz, 0)
     # Assert
     inventario.stock_disponible.assert_not_called()
+
+
+def test_subtotal_del_carrito_suma_precio_por_cantidad(carrito, arroz, cafe):
+    # Arrange
+    carrito.agregar(arroz, 4)   # 18.000
+    carrito.agregar(cafe, 2)    # 30.000
+    # Act
+    subtotal = carrito.subtotal
+    # Assert
+    assert subtotal == 48_000
