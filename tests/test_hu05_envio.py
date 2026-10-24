@@ -63,3 +63,12 @@ def test_la_base_del_envio_gratis_solo_suma_productos_con_iva():
     base = base_para_envio_gratis([arroz, cafe])
     # Assert
     assert base == 45_000
+
+def test_la_base_del_envio_gratis_solo_suma_productos_con_iva():
+    # Arrange
+    arroz = ItemCarrito(Producto("P3", "Arroz", 4_500, 0), 2)
+    cafe = ItemCarrito(Producto("P2", "Café", 15_000, 5), 3)
+    # Act
+    base = base_para_envio_gratis([arroz, cafe])
+    # Assert
+    assert base == 45_000
