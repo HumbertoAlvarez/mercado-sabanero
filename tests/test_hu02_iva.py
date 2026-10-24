@@ -21,3 +21,21 @@ def test_tarifa_de_iva_no_permitida_lanza_error():
     # Act + Assert
     with pytest.raises(TarifaIvaInvalidaError):
         calcular_iva(valor, 16)
+
+
+def test_iva_se_calcula_sobre_el_valor_con_descuento_aplicado():
+    # Arrange
+    valor = 250_000
+    # Act
+    iva = calcular_iva(valor, 19, descuento_porcentaje=5)
+    # Assert
+    assert iva == 45_125
+
+
+@pytest.mark.parametrize("valor, esperado", [(1_005, 50), (1_010, 51)])
+def test_iva_con_fraccion_de_peso_se_redondea_al_peso_mas_cercano(valor, esperado):
+    # Arrange: IVA de 5 % da 50,25 y 50,5 pesos
+    # Act
+    iva = calcular_iva(valor, 5)
+    # Assert
+    assert iva == esperado
