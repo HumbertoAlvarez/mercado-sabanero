@@ -21,3 +21,12 @@ def test_tarifa_de_iva_no_permitida_lanza_error():
     # Act + Assert
     with pytest.raises(TarifaIvaInvalidaError):
         calcular_iva(valor, 16)
+
+
+def test_iva_se_calcula_sobre_el_valor_con_descuento_aplicado():
+    # Arrange
+    valor = 250_000
+    # Act
+    iva = calcular_iva(valor, 19, descuento_porcentaje=5)
+    # Assert
+    assert iva == 45_125       
