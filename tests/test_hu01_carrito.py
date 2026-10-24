@@ -1,7 +1,7 @@
 """HU-01: agregar productos al carrito."""
 import pytest
 
-from mercado.errores import CantidadInvalidaError
+from mercado.errores import CantidadInvalidaError, StockInsuficienteError
 
 
 @pytest.mark.parametrize("cantidad", [1, 2, 49, 50])
@@ -20,3 +20,12 @@ def test_agregar_cantidad_fuera_de_rango_lanza_error(carrito, arroz, cantidad):
     # Act + Assert
     with pytest.raises(CantidadInvalidaError):
         carrito.agregar(arroz, cantidad)
+def test_agregar_con_stock_menor_a_lo_pedido_lanza_stock_insuficiente(carrito, inventario, arroz):
+    # Arrange: el inventario externo (mock) dice que solo hay 3 unidades
+    inventario.stock_disponible.return_value = 3
+    # Act + Assert
+    with pytest.raises(StockInsuficienteError):
+        carrito.agregar(arroz, 4)
+
+
+ 
