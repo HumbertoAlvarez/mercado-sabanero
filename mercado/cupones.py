@@ -1,5 +1,7 @@
 """HU-04: cupones de descuento."""
 from dataclasses import dataclass
+from datetime import date
+from typing import Optional
 
 from mercado.errores import CuponInvalidoError
 
@@ -8,14 +10,20 @@ from mercado.errores import CuponInvalidoError
 class Cupon:
     codigo: str
     porcentaje: int = 0
+    vence: Optional[date] = None  # None = sin vencimiento
 
 
 class CatalogoCupones:
-    def __init__(self):
-        self._cupones = {"SABANERO10": Cupon("SABANERO10", porcentaje=10)}
+    def __init__(self, cupones=None):
+        if cupones is None:
+            cupones = [Cupon("SABANERO10", porcentaje=10)]
+        self._cupones = {c.codigo: c for c in cupones}
 
-    def obtener(self, codigo):
+    def obtener(self, codigo, hoy=None):
         cupon = self._cupones.get(codigo.strip().upper())
         if cupon is None:
             raise CuponInvalidoError(f"El cupón {codigo!r} no existe")
+        hoy = hoy or date.today()
+        if cupon.vence is not None and hoy > cupon.vence:
+            raise CuponInvalidoError(f"El cupón {cupon.codigo} está vencido")
         return cupon
