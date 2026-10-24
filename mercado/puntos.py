@@ -7,6 +7,6 @@ MULTIPLICADOR_ORO = 2
 
 def calcular_puntos(total_sin_envio, categoria=None):
     puntos = total_sin_envio // PESOS_POR_PUNTO
-    if categoria == CATEGORIA_ORO:
+    if categoria and categoria.strip().upper() == CATEGORIA_ORO:
         return puntos * MULTIPLICADOR_ORO
     return puntos
