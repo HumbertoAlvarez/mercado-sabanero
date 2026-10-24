@@ -35,4 +35,10 @@ def test_agregar_el_mismo_producto_dos_veces_suma_las_cantidades(carrito, arroz)
     # Assert
     assert len(carrito.items) == 1
     assert carrito.items[0].cantidad == 5
- 
+
+def test_agregar_de_nuevo_que_supera_50_acumuladas_lanza_error(carrito, arroz):
+    # Arrange
+    carrito.agregar(arroz, 30)
+    # Act + Assert
+    with pytest.raises(CantidadInvalidaError):
+        carrito.agregar(arroz, 21) 
