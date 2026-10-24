@@ -12,6 +12,7 @@ class Cupon:
     porcentaje: int = 0
     vence: Optional[date] = None  # None = sin vencimiento
     subtotal_minimo: int = 0
+    envio_gratis: bool = False
 
 
 class CatalogoCupones:
@@ -32,3 +33,9 @@ class CatalogoCupones:
                 f"El cupon {cupon.codigo} exige un subtotal minimo de {cupon.subtotal_minimo}"
             )
         return cupon
+
+
+def aplicar_envio(cupon, envio):
+    if cupon.envio_gratis:
+        return 0
+    return envio
