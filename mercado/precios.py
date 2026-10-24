@@ -16,4 +16,6 @@ def redondear_division(numerador, denominador):
 
 
 def descuento_volumen_pct(subtotal):
+    if subtotal >= 200_000:
+        return 5
     return 0
