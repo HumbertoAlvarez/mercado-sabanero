@@ -19,7 +19,7 @@ class Cupon:
 class CatalogoCupones:
     def __init__(self, cupones=None):
         if cupones is None:
-            cupones = [Cupon("SABANERO10", porcentaje=10, subtotal_minimo=50_000)]
+            cupones = [Cupon(CODIGO_SABANERO10, porcentaje=10, subtotal_minimo=SUBTOTAL_MINIMO_SABANERO10)]
         self._cupones = {c.codigo: c for c in cupones}
 
     def obtener(self, codigo, hoy=None, subtotal=None):
