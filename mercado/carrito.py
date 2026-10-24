@@ -27,8 +27,7 @@ class Carrito:
 
         @property
         def subtotal(self):
-            return sum(item.producto.precio * item.cantidad for item in self.items)        
-
+            return sum(item.subtotal for item in self.items)
 
     def _validar_rango(self, cantidad):
         if not MIN_UNIDADES <= cantidad <= MAX_UNIDADES:
