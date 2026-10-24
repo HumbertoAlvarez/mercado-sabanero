@@ -42,3 +42,11 @@ def test_agregar_de_nuevo_que_supera_50_acumuladas_lanza_error(carrito, arroz):
     # Act + Assert
     with pytest.raises(CantidadInvalidaError):
         carrito.agregar(arroz, 21) 
+
+def test_agregar_de_nuevo_valida_el_stock_sobre_la_cantidad_acumulada(carrito, inventario, arroz):
+    # Arrange: el inventario (mock) dice que hay 4 unidades y ya hay 3 en el carrito
+    inventario.stock_disponible.return_value = 4
+    carrito.agregar(arroz, 3)
+    # Act + Assert
+    with pytest.raises(StockInsuficienteError):
+        carrito.agregar(arroz, 2)           
