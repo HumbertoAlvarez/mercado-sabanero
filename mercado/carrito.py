@@ -24,6 +24,11 @@ class Carrito:
         else:
             self.items.append(ItemCarrito(producto, nueva_cantidad))
 
+
+        @property
+        def subtotal(self):
+            return sum(item.subtotal for item in self.items)
+
     def _validar_rango(self, cantidad):
         if not MIN_UNIDADES <= cantidad <= MAX_UNIDADES:
             raise CantidadInvalidaError(

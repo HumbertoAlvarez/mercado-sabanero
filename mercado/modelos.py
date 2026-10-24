@@ -13,3 +13,7 @@ class Producto:
 class ItemCarrito:
     producto: Producto
     cantidad: int
+
+    @property
+    def subtotal(self):
+        return self.producto.precio * self.cantidad
