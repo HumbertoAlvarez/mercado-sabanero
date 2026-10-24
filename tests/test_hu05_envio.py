@@ -17,3 +17,12 @@ def test_envio_a_otro_municipio_cuesta_15000():
     envio = calcular_envio(municipio, 0)
     # Assert
     assert envio == 15_000
+
+
+def test_el_municipio_no_distingue_mayusculas_ni_espacios():
+    # Arrange
+    municipio = "  sincelejo "
+    # Act
+    envio = calcular_envio(municipio, 0)
+    # Assert
+    assert envio == 8_000
