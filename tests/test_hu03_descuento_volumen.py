@@ -20,3 +20,12 @@ def test_subtotal_desde_200000_y_menor_a_500000_tiene_5_por_ciento(subtotal):
     porcentaje = descuento_volumen_pct(subtotal)
     # Assert
     assert porcentaje == 5
+
+
+@pytest.mark.parametrize("subtotal", [500_000, 750_000])
+def test_subtotal_desde_500000_tiene_10_por_ciento(subtotal):
+    # Arrange: límite inferior del tramo y un valor mayor
+    # Act
+    porcentaje = descuento_volumen_pct(subtotal)
+    # Assert
+    assert porcentaje == 10
