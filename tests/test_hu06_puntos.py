@@ -44,3 +44,12 @@ def test_cliente_oro_recibe_500_puntos_con_el_ejemplo_oficial():
     puntos = calcular_puntos(total, categoria="ORO")
     # Assert
     assert puntos == 500
+
+
+def test_250515_pesos_sin_categoria_dan_250_puntos():
+    # Arrange
+    total = 250_515
+    # Act
+    puntos = calcular_puntos(total)
+    # Assert
+    assert puntos == 250
