@@ -4,6 +4,7 @@ from datetime import date
 from typing import Optional
 
 from mercado.errores import CuponInvalidoError
+from mercado.precios import descuento_volumen_pct
 
 
 @dataclass(frozen=True)
@@ -39,3 +40,7 @@ def aplicar_envio(cupon, envio):
     if cupon.envio_gratis:
         return 0
     return envio
+
+
+def mejor_descuento_pct(subtotal, cupon):
+    return max(descuento_volumen_pct(subtotal), cupon.porcentaje)
