@@ -3,7 +3,7 @@ from datetime import date
 
 import pytest
 
-from mercado.cupones import CatalogoCupones, Cupon, aplicar_envio
+from mercado.cupones import CatalogoCupones, Cupon, aplicar_envio, mejor_descuento_pct
 from mercado.errores import CuponInvalidoError
 
 
@@ -86,3 +86,16 @@ def test_cupon_sin_enviogratis_conserva_el_envio():
     envio = aplicar_envio(cupon, 15_000)
     # Assert
     assert envio == 15_000
+
+@pytest.mark.parametrize("subtotal, esperado", [
+    (100_000, 10),
+    (300_000, 10),
+    (600_000, 10),
+])
+def test_se_aplica_solo_el_mayor_entre_volumen_y_sabanero10(subtotal, esperado):
+    # Arrange
+    cupon = CatalogoCupones().obtener("SABANERO10")
+    # Act
+    porcentaje = mejor_descuento_pct(subtotal, cupon)
+    # Assert
+    assert porcentaje == esperado
