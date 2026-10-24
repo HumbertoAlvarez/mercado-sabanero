@@ -22,3 +22,12 @@ def test_cupon_inexistente_lanza_error_de_cupon_invalido():
         catalogo.obtener("NOEXISTE")
 
 
+def test_codigo_de_cupon_no_distingue_mayusculas_ni_espacios():
+    # Arrange
+    catalogo = CatalogoCupones()
+    # Act
+    cupon = catalogo.obtener("  sabanero10 ")
+    # Assert
+    assert cupon.codigo == "SABANERO10"
+
+
