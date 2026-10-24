@@ -1,6 +1,3 @@
-"""HU-01: agregar productos al carrito."""
-import pytest
-
 from mercado.errores import CantidadInvalidaError, StockInsuficienteError
 from mercado.modelos import ItemCarrito
 
@@ -24,10 +21,9 @@ class Carrito:
         else:
             self.items.append(ItemCarrito(producto, nueva_cantidad))
 
-
-        @property
-        def subtotal(self):
-            return sum(item.subtotal for item in self.items)
+    @property
+    def subtotal(self):
+        return sum(item.subtotal for item in self.items)
 
     def _validar_rango(self, cantidad):
         if not MIN_UNIDADES <= cantidad <= MAX_UNIDADES:
@@ -48,11 +44,3 @@ class Carrito:
             if item.producto == producto:
                 return item
         return None
-    
-    def test_agregar_de_nuevo_valida_el_stock_sobre_la_cantidad_acumulada(carrito, inventario, arroz):
-    # Arrange: el inventario (mock) dice que hay 4 unidades y ya hay 3 en el carrito
-        inventario.stock_disponible.return_value = 4
-        carrito.agregar(arroz, 3)
-    # Act + Assert
-        with pytest.raises(StockInsuficienteError):
-            carrito.agregar(arroz, 2)
