@@ -7,6 +7,10 @@ from mercado.errores import CuponInvalidoError
 from mercado.precios import descuento_volumen_pct
 
 
+CODIGO_SABANERO10 = "SABANERO10"
+SUBTOTAL_MINIMO_SABANERO10 = 50_000
+
+
 @dataclass(frozen=True)
 class Cupon:
     codigo: str
