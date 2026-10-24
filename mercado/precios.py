@@ -13,3 +13,7 @@ def calcular_iva(valor, tarifa, descuento_porcentaje=0):
 def redondear_division(numerador, denominador):
     """Divide con enteros y redondea al entero más cercano (la mitad sube)."""
     return (2 * numerador + denominador) // (2 * denominador)
+
+
+def descuento_volumen_pct(subtotal):
+    return 0
