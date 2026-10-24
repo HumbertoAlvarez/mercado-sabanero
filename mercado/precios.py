@@ -8,3 +8,8 @@ def calcular_iva(valor, tarifa, descuento_porcentaje=0):
         raise TarifaIvaInvalidaError(f"Tarifa de IVA no permitida: {tarifa}.")
     valor_con_descuento = valor * (100 - descuento_porcentaje) // 100
     return valor_con_descuento * tarifa // 100
+
+
+def redondear_division(numerador, denominador):
+    """Divide con enteros y redondea al entero más cercano (la mitad sube)."""
+    return (2 * numerador + denominador) // (2 * denominador)
