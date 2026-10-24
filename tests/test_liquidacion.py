@@ -18,3 +18,11 @@ def test_liquidar_cuatro_arroces_a_sincelejo_da_subtotal_18000(carrito, arroz):
     resultado = liquidar(carrito, "Sincelejo")
     # Assert
     assert resultado.subtotal == 18_000
+
+def test_liquidar_cuatro_arroces_a_sincelejo_da_subtotal_18000(carrito, arroz):
+    # Arrange
+    carrito.agregar(arroz, 4)
+    # Act
+    resultado = liquidar(carrito, "Sincelejo")
+    # Assert
+    assert resultado.subtotal == 18_000
