@@ -2,4 +2,6 @@
 
 
 def calcular_envio(municipio, base_productos_con_iva):
-    return 8_000
+    if municipio == "Sincelejo":
+        return 8_000
+    return 15_000
