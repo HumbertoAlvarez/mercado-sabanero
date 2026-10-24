@@ -41,3 +41,12 @@ def test_cupon_vencido_lanza_error_de_cupon_invalido():
         catalogo.obtener("VIEJO5", hoy=date(2026, 1, 2))
 
 
+def test_cupon_vigente_el_ultimo_dia_todavia_es_valido():
+    # Arrange: el cupón vence el 1 de enero
+    catalogo = CatalogoCupones([Cupon("HOY5", porcentaje=5, vence=date(2026, 1, 1))])
+    # Act: hoy es justo el último día de vigencia
+    cupon = catalogo.obtener("HOY5", hoy=date(2026, 1, 1))
+    # Assert
+    assert cupon.porcentaje == 5
+
+
