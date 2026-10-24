@@ -16,13 +16,13 @@ class Carrito:
     def agregar(self, producto, cantidad):
         self._validar_rango(cantidad)
         item = self._buscar_item(producto)
-        acumulada = cantidad + (item.cantidad if item else 0)
-        self._validar_rango(acumulada)
-        self._validar_stock(producto, acumulada)
+        nueva_cantidad = (item.cantidad if item else 0) + cantidad
+        self._validar_rango(nueva_cantidad)
+        self._validar_stock(producto, nueva_cantidad)
         if item:
-            item.cantidad = acumulada
+            item.cantidad = nueva_cantidad
         else:
-            self.items.append(ItemCarrito(producto, cantidad))
+            self.items.append(ItemCarrito(producto, nueva_cantidad))
 
     def _validar_rango(self, cantidad):
         if not MIN_UNIDADES <= cantidad <= MAX_UNIDADES:
