@@ -1,3 +1,4 @@
+"""HU-06: puntos de fidelidad."""
 import pytest
 
 from mercado.puntos import calcular_puntos
