@@ -15,7 +15,7 @@ class CatalogoCupones:
         self._cupones = {"SABANERO10": Cupon("SABANERO10", porcentaje=10)}
 
     def obtener(self, codigo):
-        cupon = self._cupones.get(codigo)
+        cupon = self._cupones.get(codigo.strip().upper())
         if cupon is None:
             raise CuponInvalidoError(f"El cupón {codigo!r} no existe")
         return cupon
