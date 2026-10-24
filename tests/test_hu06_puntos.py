@@ -42,3 +42,12 @@ def test_250515_pesos_sin_categoria_dan_250_puntos():
     puntos = calcular_puntos(total)
     # Assert
     assert puntos == 250
+
+@pytest.mark.parametrize("categoria", ["oro", "  Oro "])
+def test_cliente_oro_se_reconoce_sin_importar_mayusculas_ni_espacios(categoria):
+    # Arrange
+    total = 1_000
+    # Act
+    puntos = calcular_puntos(total, categoria=categoria)
+    # Assert
+    assert puntos == 2
