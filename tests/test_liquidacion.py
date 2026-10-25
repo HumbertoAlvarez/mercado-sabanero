@@ -36,3 +36,17 @@ def test_liquidar_calcula_el_iva_segun_la_tarifa_del_producto(carrito, tarifa, i
     resultado = liquidar(carrito, "Sincelejo")
     # Assert
     assert resultado.iva == iva_esperado
+
+
+@pytest.mark.parametrize("precio, descuento_esperado", [
+    (199_999, 0),
+    (200_000, 10_000),
+    (500_000, 50_000),
+])
+def test_liquidar_aplica_el_descuento_por_volumen_segun_el_subtotal(carrito, precio, descuento_esperado):
+    # Arrange: un producto sin IVA, para aislar el descuento
+    carrito.agregar(Producto("PX", "Producto de prueba", precio, 0), 1)
+    # Act
+    resultado = liquidar(carrito, "Sincelejo")
+    # Assert
+    assert resultado.descuento == descuento_esperado
