@@ -99,3 +99,11 @@ def test_se_aplica_solo_el_mayor_entre_volumen_y_sabanero10(subtotal, esperado):
     porcentaje = mejor_descuento_pct(subtotal, cupon)
     # Assert
     assert porcentaje == esperado
+
+def test_con_600000_gana_el_volumen_sobre_un_cupon_de_5_por_ciento():
+    # Arrange
+    cupon = CatalogoCupones([Cupon("CINCO5", porcentaje=5)]).obtener("CINCO5")
+    # Act
+    porcentaje = mejor_descuento_pct(600_000, cupon)
+    # Assert
+    assert porcentaje == 10
