@@ -11,13 +11,6 @@ def test_liquidar_un_carrito_vacio_lanza_error(carrito):
     with pytest.raises(CarritoVacioError):
         liquidar(carrito, "Sincelejo")
 
-def test_liquidar_cuatro_arroces_a_sincelejo_da_subtotal_18000(carrito, arroz):
-    # Arrange
-    carrito.agregar(arroz, 4)
-    # Act
-    resultado = liquidar(carrito, "Sincelejo")
-    # Assert
-    assert resultado.subtotal == 18_000
 
 def test_liquidar_cuatro_arroces_a_sincelejo_da_subtotal_18000(carrito, arroz):
     # Arrange
@@ -43,6 +36,8 @@ def test_liquidar_calcula_el_iva_segun_la_tarifa_del_producto(carrito, tarifa, i
     (200_000, 10_000),
     (500_000, 50_000),
 ])
+
+
 def test_liquidar_aplica_el_descuento_por_volumen_segun_el_subtotal(carrito, precio, descuento_esperado):
     # Arrange: un producto sin IVA, para aislar el descuento
     carrito.agregar(Producto("PX", "Producto de prueba", precio, 0), 1)
