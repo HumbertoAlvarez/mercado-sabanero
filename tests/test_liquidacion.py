@@ -84,3 +84,16 @@ def test_liquidar_da_envio_gratis_desde_150000_en_productos_con_iva(carrito, pre
     resultado = liquidar(carrito, "Sincelejo")
     # Assert
     assert resultado.envio == envio_esperado
+
+
+@pytest.mark.parametrize("precio, total_esperado", [
+    (100_000, 127_000),
+    (250_000, 282_625),
+])
+def test_liquidar_calcula_el_total_como_subtotal_menos_descuento_mas_iva_mas_envio(carrito, precio, total_esperado):
+    # Arrange: un producto con IVA del 19 % en Sincelejo, sin descuento y con descuento del 5 %
+    carrito.agregar(Producto("PX", "Producto de prueba", precio, 19), 1)
+    # Act
+    resultado = liquidar(carrito, "Sincelejo")
+    # Assert
+    assert resultado.total == total_esperado
