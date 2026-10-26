@@ -4,6 +4,7 @@ import pytest
 from mercado.errores import CarritoVacioError
 from mercado.liquidacion import liquidar
 from mercado.modelos import Producto
+from mercado.modelos import Categoria
 
 def test_liquidar_un_carrito_vacio_lanza_error(carrito):
     # Arrange: carrito sin productos (fixture)
@@ -107,5 +108,18 @@ def test_liquidar_da_un_punto_por_cada_1000_pagados_sin_contar_el_envio(carrito,
     carrito.agregar(Producto("PX", "Producto de prueba", precio, 19), 1)
     # Act
     resultado = liquidar(carrito, "Sincelejo")
+    # Assert
+    assert resultado.puntos == puntos_esperados
+
+
+@pytest.mark.parametrize("precio, puntos_esperados", [
+    (100_000, 238),
+    (250_000, 564),
+])
+def test_liquidar_da_el_doble_de_puntos_al_cliente_oro(carrito, precio, puntos_esperados):
+    # Arrange: un producto con IVA del 19 % en Sincelejo, comprado por un cliente ORO
+    carrito.agregar(Producto("PX", "Producto de prueba", precio, 19), 1)
+    # Act
+    resultado = liquidar(carrito, "Sincelejo", categoria=Categoria.ORO)
     # Assert
     assert resultado.puntos == puntos_esperados
