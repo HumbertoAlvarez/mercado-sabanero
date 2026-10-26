@@ -1,6 +1,7 @@
 """Liquidacion de una compra."""
 from dataclasses import dataclass
 
+from mercado.envio import calcular_envio
 from mercado.errores import CarritoVacioError
 from mercado.precios import calcular_iva, descuento_volumen_pct, redondear_division
 
@@ -10,6 +11,7 @@ class Liquidacion:
     subtotal: int
     iva: int
     descuento: int
+    envio: int
 
 
 def liquidar(carrito, municipio):
@@ -22,4 +24,5 @@ def liquidar(carrito, municipio):
         calcular_iva(item.subtotal, item.producto.tarifa_iva, porcentaje_descuento)
         for item in carrito.items
     )
-    return Liquidacion(subtotal=subtotal, iva=iva, descuento=descuento)
+    envio = calcular_envio(municipio, 0)
+    return Liquidacion(subtotal=subtotal, iva=iva, descuento=descuento, envio=envio)
