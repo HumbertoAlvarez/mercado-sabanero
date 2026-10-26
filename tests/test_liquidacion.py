@@ -137,11 +137,17 @@ def test_liquidar_con_cupon_envio_gratis_deja_el_envio_en_cero(carrito):
     assert resultado.envio == 0
 
 
-def test_liquidar_con_cupon_envio_gratis_deja_el_envio_en_cero(carrito):
-    # Arrange: un producto con envío estándar en Sincelejo (que normalmente costaría $8.000)
-    carrito.agregar(Producto("PX", "Producto de prueba", 50_000, 0), 1)
-    cupon = Cupon("ENVIOGRATIS")
-    # Act
-    resultado = liquidar(carrito, "Sincelejo", cupon=cupon)
+def test_liquidar_reproduce_el_ejemplo_oficial_del_enunciado(carrito):
+    # Arrange: licuadora con IVA 19 %, 2 cafés con IVA 5 % y 4 arroces sin IVA
+    carrito.agregar(Producto("P1", "Licuadora", 180_000, 19), 1)
+    carrito.agregar(Producto("P2", "Cafe", 15_000, 5), 2)
+    carrito.agregar(Producto("P3", "Arroz", 4_500, 0), 4)
+    # Act: cliente estandar en Sincelejo, sin cupon
+    resultado = liquidar(carrito, "Sincelejo")
     # Assert
+    assert resultado.subtotal == 228_000
+    assert resultado.descuento == 11_400
+    assert resultado.iva == 33_915
     assert resultado.envio == 0
+    assert resultado.total == 250_515
+    assert resultado.puntos == 250
