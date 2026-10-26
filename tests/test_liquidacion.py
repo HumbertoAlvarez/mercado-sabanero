@@ -124,3 +124,18 @@ def test_liquidar_da_el_doble_de_puntos_al_cliente_oro(carrito, precio, puntos_e
     resultado = liquidar(carrito, "Sincelejo", categoria="ORO")
     # Assert
     assert resultado.puntos == puntos_esperados
+
+def test_liquidar_reproduce_el_ejemplo_oficial_del_enunciado(carrito):
+    # Arrange: licuadora con IVA 19 %, 2 cafés con IVA 5 % y 4 arroces sin IVA
+    carrito.agregar(Producto("P1", "Licuadora", 180_000, 19), 1)
+    carrito.agregar(Producto("P2", "Cafe", 15_000, 5), 2)
+    carrito.agregar(Producto("P3", "Arroz", 4_500, 0), 4)
+    # Act: cliente estandar en Sincelejo, sin cupon
+    resultado = liquidar(carrito, "Sincelejo")
+    # Assert
+    assert resultado.subtotal == 228_000
+    assert resultado.descuento == 11_400
+    assert resultado.iva == 33_915
+    assert resultado.envio == 0
+    assert resultado.total == 250_515
+    assert resultado.puntos == 250
