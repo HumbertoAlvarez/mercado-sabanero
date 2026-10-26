@@ -15,10 +15,11 @@ class Liquidacion:
 def liquidar(carrito, municipio):
     if not carrito.items:
         raise CarritoVacioError("El carrito esta vacio")
+    subtotal = carrito.subtotal
+    porcentaje_descuento = descuento_volumen_pct(subtotal)
+    descuento = redondear_division(subtotal * porcentaje_descuento, 100)
     iva = sum(
-        calcular_iva(item.subtotal, item.producto.tarifa_iva)
+        calcular_iva(item.subtotal, item.producto.tarifa_iva, porcentaje_descuento)
         for item in carrito.items
     )
-    subtotal = carrito.subtotal
-    descuento = redondear_division(subtotal * descuento_volumen_pct(subtotal), 100)
     return Liquidacion(subtotal=subtotal, iva=iva, descuento=descuento)
