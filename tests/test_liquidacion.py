@@ -124,3 +124,12 @@ def test_liquidar_da_el_doble_de_puntos_al_cliente_oro(carrito, precio, puntos_e
     resultado = liquidar(carrito, "Sincelejo", categoria="ORO")
     # Assert
     assert resultado.puntos == puntos_esperados
+
+
+def test_liquidar_con_cupon_envio_gratis_deja_el_envio_en_cero(carrito):
+    # Arrange: un producto con envío estándar en Sincelejo (que normalmente costaría $8.000)
+    carrito.agregar(Producto("PX", "Producto de prueba", 50_000, 0), 1)
+    # Act
+    resultado = liquidar(carrito, "Sincelejo", cupon="ENVIOGRATIS")
+    # Assert
+    assert resultado.envio == 0
