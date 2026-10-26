@@ -97,3 +97,15 @@ def test_liquidar_calcula_el_total_como_subtotal_menos_descuento_mas_iva_mas_env
     resultado = liquidar(carrito, "Sincelejo")
     # Assert
     assert resultado.total == total_esperado
+
+@pytest.mark.parametrize("precio, puntos_esperados", [
+    (100_000, 119),
+    (250_000, 282),
+])
+def test_liquidar_da_un_punto_por_cada_1000_pagados_sin_contar_el_envio(carrito, precio, puntos_esperados):
+    # Arrange: un producto con IVA del 19 % en Sincelejo, con y sin envío cobrado
+    carrito.agregar(Producto("PX", "Producto de prueba", precio, 19), 1)
+    # Act
+    resultado = liquidar(carrito, "Sincelejo")
+    # Assert
+    assert resultado.puntos == puntos_esperados
