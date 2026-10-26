@@ -5,6 +5,8 @@ from mercado.envio import calcular_envio
 from mercado.errores import CarritoVacioError
 from mercado.precios import calcular_iva, descuento_volumen_pct, redondear_division
 from mercado.envio import calcular_envio, base_para_envio_gratis
+from mercado.puntos import calcular_puntos
+
 
 @dataclass(frozen=True)
 class Liquidacion:
@@ -13,6 +15,7 @@ class Liquidacion:
     descuento: int
     envio: int
     total: int
+    puntos: int
 
 
 def liquidar(carrito, municipio):
@@ -28,4 +31,5 @@ def liquidar(carrito, municipio):
     base_envio_gratis = base_para_envio_gratis(carrito.items)
     envio = calcular_envio(municipio, base_envio_gratis)
     total = subtotal - descuento + iva + envio
-    return Liquidacion(subtotal=subtotal, iva=iva, descuento=descuento, envio=envio, total=total)
+    puntos = calcular_puntos(total - envio)
+    return Liquidacion(subtotal=subtotal, iva=iva, descuento=descuento, envio=envio, total=total, puntos=puntos)
