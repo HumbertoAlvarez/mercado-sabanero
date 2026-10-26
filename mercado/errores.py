@@ -9,5 +9,12 @@ class StockInsuficienteError(Exception):
 
 class TarifaIvaInvalidaError(ValueError):
     """La tarifa de IVA no es 0, 5 ni 19 por ciento."""
+
+
+
+class CarritoVacioError(Exception):
+    """No se puede liquidar un carrito sin productos."""
+
 class CuponInvalidoError(Exception):
     """El cupón no existe, está vencido o no cumple sus condiciones."""
+
