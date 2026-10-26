@@ -57,3 +57,18 @@ def test_liquidar_calcula_el_iva_sobre_el_valor_ya_descontado(carrito, precio, i
     resultado = liquidar(carrito, "Sincelejo")
     # Assert
     assert resultado.iva == iva_esperado
+
+
+@pytest.mark.parametrize("municipio, envio_esperado", [
+    ("Sincelejo", 8_000),
+    ("Corozal", 15_000),
+])
+
+
+def test_liquidar_cobra_8000_en_sincelejo_y_15000_en_otros_municipios(carrito, municipio, envio_esperado):
+    # Arrange: un producto sin IVA y de poco valor, para no activar el envío gratis
+    carrito.agregar(Producto("PX", "Producto de prueba", 20_000, 0), 1)
+    # Act
+    resultado = liquidar(carrito, municipio)
+    # Assert
+    assert resultado.envio == envio_esperado
