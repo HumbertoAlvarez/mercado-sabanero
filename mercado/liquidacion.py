@@ -12,6 +12,7 @@ class Liquidacion:
     iva: int
     descuento: int
     envio: int
+    total: int
 
 
 def liquidar(carrito, municipio):
@@ -26,4 +27,5 @@ def liquidar(carrito, municipio):
     )
     base_envio_gratis = base_para_envio_gratis(carrito.items)
     envio = calcular_envio(municipio, base_envio_gratis)
-    return Liquidacion(subtotal=subtotal, iva=iva, descuento=descuento, envio=envio)
+    total = subtotal - descuento + iva + envio
+    return Liquidacion(subtotal=subtotal, iva=iva, descuento=descuento, envio=envio, total=total)
