@@ -72,3 +72,15 @@ def test_liquidar_cobra_8000_en_sincelejo_y_15000_en_otros_municipios(carrito, m
     resultado = liquidar(carrito, municipio)
     # Assert
     assert resultado.envio == envio_esperado
+
+@pytest.mark.parametrize("precio, envio_esperado", [
+    (149_999, 8_000),
+    (150_000, 0),
+])
+def test_liquidar_da_envio_gratis_desde_150000_en_productos_con_iva(carrito, precio, envio_esperado):
+    # Arrange: un producto con IVA 19 % justo debajo y justo en el umbral
+    carrito.agregar(Producto("PX", "Producto de prueba", precio, 19), 1)
+    # Act
+    resultado = liquidar(carrito, "Sincelejo")
+    # Assert
+    assert resultado.envio == envio_esperado
