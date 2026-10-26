@@ -18,7 +18,7 @@ class Liquidacion:
     puntos: int
 
 
-def liquidar(carrito, municipio):
+def liquidar(carrito, municipio, categoria=None):
     if not carrito.items:
         raise CarritoVacioError("El carrito esta vacio")
     subtotal = carrito.subtotal
@@ -31,5 +31,5 @@ def liquidar(carrito, municipio):
     base_envio_gratis = base_para_envio_gratis(carrito.items)
     envio = calcular_envio(municipio, base_envio_gratis)
     total = subtotal - descuento + iva + envio
-    puntos = calcular_puntos(total - envio)
+    puntos = calcular_puntos(total - envio, categoria)
     return Liquidacion(subtotal=subtotal, iva=iva, descuento=descuento, envio=envio, total=total, puntos=puntos)
