@@ -4,6 +4,8 @@ import pytest
 from mercado.errores import CarritoVacioError
 from mercado.liquidacion import liquidar
 from mercado.modelos import Producto
+from mercado.cupones import Cupon
+
 
 def test_liquidar_un_carrito_vacio_lanza_error(carrito):
     # Arrange: carrito sin productos (fixture)
@@ -131,5 +133,15 @@ def test_liquidar_con_cupon_envio_gratis_deja_el_envio_en_cero(carrito):
     carrito.agregar(Producto("PX", "Producto de prueba", 50_000, 0), 1)
     # Act
     resultado = liquidar(carrito, "Sincelejo", cupon="ENVIOGRATIS")
+    # Assert
+    assert resultado.envio == 0
+
+
+def test_liquidar_con_cupon_envio_gratis_deja_el_envio_en_cero(carrito):
+    # Arrange: un producto con envío estándar en Sincelejo (que normalmente costaría $8.000)
+    carrito.agregar(Producto("PX", "Producto de prueba", 50_000, 0), 1)
+    cupon = Cupon("ENVIOGRATIS")
+    # Act
+    resultado = liquidar(carrito, "Sincelejo", cupon=cupon)
     # Assert
     assert resultado.envio == 0
